@@ -1,0 +1,24 @@
+{
+  "name": "todo-desktop-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rajrpatel62499/todo-desktop-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rajrpatel62499/todo-desktop-app/issues"
+  },
+  "homepage": "https://github.com/rajrpatel62499/todo-desktop-app#readme",
+  "dependencies": {
+    "electron": "^16.0.1",
+    "electron-reload": "^2.0.0-alpha.1"
+  }
+}
