@@ -5,9 +5,11 @@ MileStone 1.
 MileStone 2. 
 -> Integrate functionality of addTodo, deleteTodo.
 -> complete todo & uncomplete todo UI & functionality.
--> Implement with the local storage api. 
+-> Improve the code base.
+
 
 MileStone 3. 
+-> Implement with the local storage api. 
 -> change localstorage API to the sqllite database.
 
 MileStone 4. 

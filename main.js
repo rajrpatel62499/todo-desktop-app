@@ -12,8 +12,6 @@ function main() {
     let mainWindow = new Window({
         file: path.join(__dirname, "renderer", 'index.html')
     });
-
-    
 }
 
 // executes the application

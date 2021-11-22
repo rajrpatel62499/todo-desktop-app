@@ -2,14 +2,18 @@ const form = document.getElementById('form');
 const input = document.getElementById('input');
 const todosUL = document.getElementById('todos');
 
-
-const todos = JSON.parse(localStorage.getItem('todos'));
-
-if (todos) {
-    todos.forEach(todo => {
-        addToDo(todo)
-    });
+function fetchTodos() {
+    const todos = JSON.parse(localStorage.getItem('todos'));
+    
+    if (todos) {
+        todos.forEach(todo => {
+            addToDo(todo)
+        });
+    }
 }
+
+fetchTodos();
+
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -26,22 +30,6 @@ input.addEventListener("keydown", function (e) {
     }
 })
 
-$('ul.todos').on('focus', 'li', function() {
-    $this = $(this);
-    $this.addClass('focus').siblings().removeClass("focus");
-    $this.closest('ul.todos').scrollTop($this.index() * $this.outerHeight());
-}).on('keydown', 'li', function(e) {
-    $this = $(this);
-    if (e.keyCode == 40) {        
-        $this.next().focus();
-        return false;
-    } else if (e.keyCode == 38) {        
-        $this.prev().focus();
-        return false;
-    }
-}).find('li').first().focus();
-
-
 function changeInputBoxFocus() {
     const todosEl = document.querySelectorAll('li');
 
@@ -51,6 +39,28 @@ function changeInputBoxFocus() {
         input.blur();
     }
 }
+
+
+function handleKeyUpDownTodoEvent() {
+    $('ul.todos').on('focus', 'li', function() {
+        $this = $(this);
+        $this.addClass('focus').siblings().removeClass("focus");
+        $this.closest('ul.todos').scrollTop($this.index() * $this.outerHeight());
+    }).on('keydown', 'li', function(e) {
+        $this = $(this);
+        if (e.keyCode == 40) {        
+            $this.next().focus();
+            return false;
+        } else if (e.keyCode == 38) {        
+            $this.prev().focus();
+            return false;
+        }
+    }).find('li').first().focus();
+}
+handleKeyUpDownTodoEvent();
+
+
+
 
 
 function addToDo(todo) {
