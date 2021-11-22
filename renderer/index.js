@@ -85,6 +85,13 @@ function addToDo(todo) {
             if (e.which == 32) {
                 todoEl.classList.toggle("completed");
             }
+            if (e.which == 46) {
+                // delete the todo 
+                todoEl.remove();
+                updateLS();
+            }
+
+
             updateLS();
         })
 
