@@ -26,20 +26,20 @@ input.addEventListener("keydown", function (e) {
     }
 })
 
-// $('div.container').on('focus', 'li', function() {
-//     $this = $(this);
-//     $this.addClass('focus').siblings().removeClass();
-//     $this.closest('div.container').scrollTop($this.index() * $this.outerHeight());
-// }).on('keydown', 'li', function(e) {
-//     $this = $(this);
-//     if (e.keyCode == 40) {        
-//         $this.next().focus();
-//         return false;
-//     } else if (e.keyCode == 38) {        
-//         $this.prev().focus();
-//         return false;
-//     }
-// }).find('li').first().focus();
+$('ul.todos').on('focus', 'li', function() {
+    $this = $(this);
+    $this.addClass('focus').siblings().removeClass("focus");
+    $this.closest('ul.todos').scrollTop($this.index() * $this.outerHeight());
+}).on('keydown', 'li', function(e) {
+    $this = $(this);
+    if (e.keyCode == 40) {        
+        $this.next().focus();
+        return false;
+    } else if (e.keyCode == 38) {        
+        $this.prev().focus();
+        return false;
+    }
+}).find('li').first().focus();
 
 
 function changeInputBoxFocus() {
@@ -67,6 +67,7 @@ function addToDo(todo) {
             todoEl.classList.add('completed');
         }
         todoEl.innerHTML = todoText;
+        todoEl.tabIndex = -1;
 
         todoEl.addEventListener('click', () => {
             todoEl.classList.toggle('completed');
@@ -78,6 +79,16 @@ function addToDo(todo) {
             todoEl.remove();
             updateLS();
         })
+
+        todoEl.addEventListener("keydown", (e) => {
+            e.preventDefault();
+            if (e.which == 32) {
+                todoEl.classList.toggle("completed");
+            }
+            updateLS();
+        })
+
+
         todosUL.appendChild(todoEl);
 
         input.value = "";

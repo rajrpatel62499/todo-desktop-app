@@ -56,9 +56,11 @@ form{
     cursor: pointer;
 }
 
-.todos li.focus {
-  border: 1px solid blue;
+.todos li:focus {
+    border: 1px solid blue;
 }
+/* .todos li.focus {
+} */
 
 .todos li.completed{
     text-decoration: line-through;
