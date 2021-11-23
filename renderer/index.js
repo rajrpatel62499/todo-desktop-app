@@ -1,3 +1,4 @@
+
 const form = document.getElementById('form');
 const input = document.getElementById('input');
 const todosUL = document.getElementById('todos');
@@ -29,39 +30,6 @@ input.addEventListener("keydown", function (e) {
           break;
     }
 })
-
-function changeInputBoxFocus() {
-    const todosEl = document.querySelectorAll('li');
-
-    if (todosEl.length > 0) {
-        todosEl[0].focus();
-        todosEl[0].classList.add("focus");
-        input.blur();
-    }
-}
-
-
-function handleKeyUpDownTodoEvent() {
-    $('ul.todos').on('focus', 'li', function() {
-        $this = $(this);
-        $this.addClass('focus').siblings().removeClass("focus");
-        $this.closest('ul.todos').scrollTop($this.index() * $this.outerHeight());
-    }).on('keydown', 'li', function(e) {
-        $this = $(this);
-        if (e.keyCode == 40) {        
-            $this.next().focus();
-            return false;
-        } else if (e.keyCode == 38) {        
-            $this.prev().focus();
-            return false;
-        }
-    }).find('li').first().focus();
-}
-handleKeyUpDownTodoEvent();
-
-
-
-
 
 function addToDo(todo) {
     let todoText = input.value;
@@ -107,12 +75,45 @@ function addToDo(todo) {
 
 
         todosUL.appendChild(todoEl);
-
         input.value = "";
 
         updateLS();
     }
 }
+
+
+function changeInputBoxFocus() {
+    const todosEl = document.querySelectorAll('li');
+
+    if (todosEl.length > 0) {
+        todosEl[0].focus();
+        todosEl[0].classList.add("focus");
+        input.blur();
+    }
+}
+
+
+function handleKeyUpDownTodoEvent() {
+    $('ul.todos').on('focus', 'li', function() {
+        $this = $(this);
+        $this.addClass('focus').siblings().removeClass("focus");
+        $this.closest('ul.todos').scrollTop($this.index() * $this.outerHeight());
+    }).on('keydown', 'li', function(e) {
+        $this = $(this);
+        if (e.keyCode == 40) {        
+            $this.next().focus();
+            return false;
+        } else if (e.keyCode == 38) {        
+            $this.prev().focus();
+            return false;
+        }
+    }).find('li').first().focus();
+}
+
+
+handleKeyUpDownTodoEvent();
+
+
 
 function updateLS() {
     const todosEl = document.querySelectorAll('li');

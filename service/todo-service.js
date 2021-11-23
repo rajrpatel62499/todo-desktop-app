@@ -1,4 +1,4 @@
-// const SqLiteService = require('./sqllite-service');
+const SqLiteService = require('./sqllite-service');
 
 class TodoService {
 
@@ -16,24 +16,24 @@ class TodoService {
         })
     }
 
-    findAll(tblName) {
-        return this.sqliteService.find(tblName);    
+    findAll() {
+        return this.sqliteService.find(this.tblName);    
     }
 
     findById(id) {
-        return this.sqliteService.findById(tblName, id);    
+        return this.sqliteService.findById(this.tblName, id);    
     }
 
     insert(todo) {
-        return this.sqliteService.findById(tblName, todo);    
+        return this.sqliteService.findById(this.tblName, todo);    
     }
     
     updateById(id, todo) {
-        return this.sqliteService.update(tblName, id, todo);    
+        return this.sqliteService.update(this.tblName, id, todo);    
     }
     
     deleteById(id) {
-        return this.sqliteService.remove(tblName, id);    
+        return this.sqliteService.remove(this.tblName, id);    
     }
 
 

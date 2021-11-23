@@ -1,7 +1,13 @@
 const knex = require('knex');
 const { sqliteConfig } = require("../config");
 
-const db = knex(sqliteConfig);
+const db = knex({
+  client: 'sqlite3',
+  connection: {
+    filename: "../todos.sqlite"
+  },
+  useNullAsDefault: true
+});
 
 class SqLiteService {
 
@@ -35,5 +41,10 @@ class SqLiteService {
   }
 
 } 
+
+const sql = new SqLiteService();
+sql.find('todos').then(res => {
+  console.log(res);
+})
 
 module.exports = SqLiteService;
