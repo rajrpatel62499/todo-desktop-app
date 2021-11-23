@@ -18,10 +18,13 @@
   },
   "homepage": "https://github.com/rajrpatel62499/todo-desktop-app#readme",
   "dependencies": {
-    "electron": "^16.0.1",
     "electron-reload": "^2.0.0-alpha.1",
     "electron-store": "^8.0.1",
     "knex": "^0.95.14",
     "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {
+    "electron": "^16.0.1",
+    "electron-builder": "^22.14.5"
   }
 }

@@ -109,7 +109,7 @@ function fetchTodos() {
     }
 }
 
-// fetchTodos();
+fetchTodos();
 
 
 
@@ -144,8 +144,8 @@ function updateLS() {
         })
     });
 
-    // localStorage.setItem('todos', JSON.stringify(todos))
-    updateAllTodos(todos);
+    localStorage.setItem('todos', JSON.stringify(todos))
+    // updateAllTodos(todos);
 }
 
 // const getTodoBtn = document.getElementById("getTodoBtn");
@@ -166,7 +166,7 @@ function updateAllTodos(todos) {
     ipcRenderer.send('update-todos', todos );
 }
 
-getTodos();
+// getTodos();
 
 ipcRenderer.on("receive-todos", (e,todos) => {
     console.log("receive-todos", todos);
