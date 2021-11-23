@@ -3,17 +3,6 @@ const form = document.getElementById('form');
 const input = document.getElementById('input');
 const todosUL = document.getElementById('todos');
 
-function fetchTodos() {
-    const todos = JSON.parse(localStorage.getItem('todos'));
-    
-    if (todos) {
-        todos.forEach(todo => {
-            addToDo(todo)
-        });
-    }
-}
-
-fetchTodos();
 
 
 form.addEventListener('submit', (e) => {
@@ -31,54 +20,45 @@ input.addEventListener("keydown", function (e) {
     }
 })
 
-function addToDo(todo) {
-    let todoText = input.value;
 
-    if (todo) {
-        todoText = todo.text;
+
+
+//#region UI Related Functions
+function createTodoEl(todo) {
+    const todoEl = document.createElement('li');
+    if (todo && todo.completed) {
+        todoEl.classList.add('completed');
     }
+    todoEl.innerHTML = todo.text;
+    todoEl.tabIndex = -1;
 
+    todoEl.addEventListener('click', () => {
+        todoEl.classList.toggle('completed');
+        updateLS();
+    })
 
-    if (todoText) {
-        const todoEl = document.createElement('li');
-        if (todo && todo.completed) {
-            todoEl.classList.add('completed');
+    todoEl.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        todoEl.remove();
+        updateLS();
+    })
+
+    todoEl.addEventListener("keydown", (e) => {
+        e.preventDefault();
+        if (e.which == 32) {
+            todoEl.classList.toggle("completed");
         }
-        todoEl.innerHTML = todoText;
-        todoEl.tabIndex = -1;
-
-        todoEl.addEventListener('click', () => {
-            todoEl.classList.toggle('completed');
-            updateLS();
-        })
-
-        todoEl.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
+        if (e.which == 46) {
+            // delete the todo 
             todoEl.remove();
             updateLS();
-        })
+        }
 
-        todoEl.addEventListener("keydown", (e) => {
-            e.preventDefault();
-            if (e.which == 32) {
-                todoEl.classList.toggle("completed");
-            }
-            if (e.which == 46) {
-                // delete the todo 
-                todoEl.remove();
-                updateLS();
-            }
-
-
-            updateLS();
-        })
-
-
-        todosUL.appendChild(todoEl);
-        input.value = "";
 
         updateLS();
-    }
+    })
+
+    return todoEl;
 }
 
 
@@ -113,7 +93,40 @@ function handleKeyUpDownTodoEvent() {
 
 handleKeyUpDownTodoEvent();
 
+//#endregion
 
+
+//#region Data related functions
+
+function fetchTodos() {
+    const todos = JSON.parse(localStorage.getItem('todos'));
+    
+    if (todos) {
+        todos.forEach(todo => {
+            addToDo(todo)
+        });
+    }
+}
+
+fetchTodos();
+
+
+
+function addToDo(todo) {
+    let todoText = input.value;
+
+    if (todo) {
+        todoText = todo.text;
+    }
+
+    if (todoText) {
+        const todoEl = createTodoEl(todo);
+
+        todosUL.appendChild(todoEl);
+        input.value = "";
+        updateLS();
+    }
+}
 
 function updateLS() {
     const todosEl = document.querySelectorAll('li');
@@ -130,3 +143,5 @@ function updateLS() {
 
     localStorage.setItem('todos', JSON.stringify(todos))
 }
+
+//#endregion

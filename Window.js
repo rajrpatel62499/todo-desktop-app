@@ -4,13 +4,15 @@ const { BrowserWindow } = require('electron')
 
 // default window settings
 const defaultProps = {
-  width: 500,
+  width: 1000,
   height: 800,
   show: false,
   
   // update for electron V5+
   webPreferences: {
-    nodeIntegration: true
+    nodeIntegration: true,
+    contextIsolation: false,
+    enableRemoteModule: true,
   }
 }
 
