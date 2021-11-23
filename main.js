@@ -9,7 +9,7 @@ const DataStore = require('./DataStore')
 require('electron-reload')(__dirname)
 
 // create a new todo store name "Todos Main"
-const todosData = new DataStore({ name: 'Todos Main' })
+const todosData = new DataStore({ name: 'Todos Main 2' })
 
 function main () {
   // todo list window
@@ -59,6 +59,15 @@ function main () {
     const updatedTodos = todosData.deleteTodo(todo).todos
 
     mainWindow.send('todos', updatedTodos)
+  })
+
+  ipcMain.on("get-todos", (e, args) => {
+      e.sender.send("receive-todos", todosData.todos);
+  })
+  ipcMain.on('update-todos', (e,todos) => {
+      todosData.todos = todos;
+      todosData.saveTodos();
+      e.sender.send("receive-todos", todosData.todos);
   })
 }
 

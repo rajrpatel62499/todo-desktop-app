@@ -1,3 +1,4 @@
+const { ipcRenderer } = require("electron");
 
 const form = document.getElementById('form');
 const input = document.getElementById('input');
@@ -108,19 +109,21 @@ function fetchTodos() {
     }
 }
 
-fetchTodos();
+// fetchTodos();
 
 
 
 function addToDo(todo) {
     let todoText = input.value;
 
+    
     if (todo) {
         todoText = todo.text;
     }
 
     if (todoText) {
-        const todoEl = createTodoEl(todo);
+        let todoObj = {...todo, text: todoText};
+        const todoEl = createTodoEl(todoObj);
 
         todosUL.appendChild(todoEl);
         input.value = "";
@@ -141,7 +144,46 @@ function updateLS() {
         })
     });
 
-    localStorage.setItem('todos', JSON.stringify(todos))
+    // localStorage.setItem('todos', JSON.stringify(todos))
+    updateAllTodos(todos);
 }
+
+// const getTodoBtn = document.getElementById("getTodoBtn");
+// const postTodoBtn = document.getElementById("postTodoBtn");
+
+// getTodoBtn.addEventListener("click", getTodos);
+// postTodoBtn.addEventListener("click", postTodo);
+
+function getTodos() {
+    ipcRenderer.send("get-todos", "getTodos");
+}
+
+function postTodo(todo) {
+    ipcRenderer.send('add-todo', todo);
+}
+
+function updateAllTodos(todos) {
+    ipcRenderer.send('update-todos', todos );
+}
+
+getTodos();
+
+ipcRenderer.on("receive-todos", (e,todos) => {
+    console.log("receive-todos", todos);
+
+    todosUL.innerHTML = '';
+    // update this todos in dom 
+    todos.forEach(todo => {
+        let todoEl = createTodoEl(todo);
+        todosUL.appendChild(todoEl);
+        input.value = "";
+    })
+})
+
+ipcRenderer.on("added-todo", (e,todos) => {
+    console.log("added-todo", todos);
+})
+
+
 
 //#endregion
